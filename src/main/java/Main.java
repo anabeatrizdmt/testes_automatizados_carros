@@ -22,11 +22,14 @@ public class Main {
      *
      * Regras:
      *
+     *
      * - Só podemos realizar as ações como acelerar e frear com o carro ligado
      * - Só podemos desligar o carro quando ele parar totalmente (velocidadeAtual = 0)
      * - Não existe velocidade negativa
      * - O carro não pode passar de sua velocidade máxima
      *
+     *
+     * Realizar os testes unitários utilizando TDD
      */
 
     public static void main(String[] args) {
