@@ -5,6 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
+
 public class CarroServiceImplTest {
     private CarroService carroService;
     private Carro celtinha;
@@ -17,20 +20,18 @@ public class CarroServiceImplTest {
 
     @Test
     public void deveAcelerarCorretamente() {
-        // Given
+        // Quando
         carroService.ligar(celtinha);
-
-        // When
         carroService.acelerar(celtinha, 10);
 
-        // Then
-        // Assertivas
-        // O Junit busca por Asserts no método para validar que o teste passou
+        // Então
         Assert.assertTrue(celtinha.getVelocidadeAtual() == 10);
     }
 
     @Test
     public void deveLigarCorretamente() {
+        assumeFalse(celtinha.isLigado());
+
         // Quando
         carroService.ligar(celtinha);
 
@@ -116,5 +117,24 @@ public class CarroServiceImplTest {
         // Então:
         Assert.assertTrue(celtinha.isLigado());
         Assert.assertEquals(45, celtinha.getVelocidadeAtual());
+    }
+
+    @Test
+    public void devePassarOEstadoCorretoEstandoLigado() {
+        // Quando:
+        carroService.ligar(celtinha);
+
+        // Então:
+        Assert.assertTrue(celtinha.isLigado());
+        Assert.assertEquals("Ligado", carroService.estadoAtual(celtinha));
+    }
+
+    @Test
+    public void devePassarOEstadoCorretoEstandoDesligado() {
+        // Quando:
+
+        // Então:
+        Assert.assertFalse(celtinha.isLigado());
+        Assert.assertEquals("Desligado", carroService.estadoAtual(celtinha));
     }
 }

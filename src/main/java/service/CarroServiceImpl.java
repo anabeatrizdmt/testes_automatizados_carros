@@ -54,6 +54,9 @@ public class CarroServiceImpl implements CarroService {
 
     @Override
     public String estadoAtual(Carro carro) {
-        return carro.toString();
+        if (carro.isLigado()) {
+            return "Ligado";
+        }
+        return "Desligado";
     }
 }
