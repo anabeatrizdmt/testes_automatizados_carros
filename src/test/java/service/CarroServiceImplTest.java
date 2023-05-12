@@ -2,52 +2,46 @@ package service;
 
 import model.Carro;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CarroServiceImplTest {
+    private CarroService carroService;
+    private Carro celtinha;
+
+    @Before
+    public void setUp() {
+        carroService = new CarroServiceImpl();
+        celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
+    }
 
     @Test
     public void deveAcelerarCorretamente() {
-        CarroService carroService = new CarroServiceImpl();
-
         // Given
-        Carro carroTeste01 = new Carro("Azul", "Fiat", "Uno", 2015, 150);
-        carroService.ligar(carroTeste01);
+        carroService.ligar(celtinha);
 
         // When
-        carroService.acelerar(carroTeste01, 10);
+        carroService.acelerar(celtinha, 10);
 
         // Then
         // Assertivas
         // O Junit busca por Asserts no método para validar que o teste passou
-        Assert.assertTrue(carroTeste01.getVelocidadeAtual() == 10);
+        Assert.assertTrue(celtinha.getVelocidadeAtual() == 10);
     }
 
     @Test
     public void deveLigarCorretamente() {
-        CarroService carroService = new CarroServiceImpl();
-
-        // Dado
-        Carro carro =
-                new Carro("vermelho", "marca", "modelo", 1990, 100);
-
         // Quando
-        carroService.ligar(carro);
+        carroService.ligar(celtinha);
 
         // Então
-        Assert.assertTrue(carro.isLigado());
+        Assert.assertTrue(celtinha.isLigado());
     }
 
     @Test
     public void velocidadeNaoDeveSerMenorQueZero() {
-        // O Junit busca por Assets no método para validar que o teste passou
-
-        // Dado:
-        CarroService carroService = new CarroServiceImpl();
-        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
-        carroService.ligar(celtinha); // velocidade zero
-
         // Quando:
+        carroService.ligar(celtinha);
         carroService.frear(celtinha, 10);
 
         // Então:
@@ -57,10 +51,6 @@ public class CarroServiceImplTest {
 
     @Test
     public void deveLigarCorretamenteEAcelerarCorretamente() {
-        // Dado:
-        CarroService carroService = new CarroServiceImpl();
-        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
-
         // Quando:
         carroService.ligar(celtinha);
         carroService.acelerar(celtinha, 10);
@@ -72,10 +62,6 @@ public class CarroServiceImplTest {
 
     @Test
     public void deveNaoAcelerarEstandoDesligado() {
-        // Dado:
-        CarroService carroService = new CarroServiceImpl();
-        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
-
         // Quando:
         carroService.acelerar(celtinha, 10);
 
@@ -87,10 +73,6 @@ public class CarroServiceImplTest {
 
     @Test
     public void deveNaoFreiarEstandoDesligado() {
-        // Dado:
-        CarroService carroService = new CarroServiceImpl();
-        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
-
         // Quando:
         carroService.frear(celtinha, 10);
 
@@ -101,10 +83,6 @@ public class CarroServiceImplTest {
 
     @Test
     public void deveNaoDesligarEstandoEmMovimento() {
-        // Dado:
-        CarroService carroService = new CarroServiceImpl();
-        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
-
         // Quando:
         carroService.ligar(celtinha);
         carroService.acelerar(celtinha, 10);
@@ -117,10 +95,6 @@ public class CarroServiceImplTest {
 
     @Test
     public void deveNaoFreiarMaisDoQueAVelocidadeAtual() {
-        // Dado:
-        CarroService carroService = new CarroServiceImpl();
-        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
-
         // Quando:
         carroService.ligar(celtinha);
         carroService.acelerar(celtinha, 10);
@@ -132,11 +106,7 @@ public class CarroServiceImplTest {
 
     @Test
     public void deveNaoPassarDaVelocidadeMaxima() {
-        // Dado:
-        CarroService carroService = new CarroServiceImpl();
-        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
-
-        // Quando:
+       // Quando:
         carroService.ligar(celtinha);
         carroService.acelerar(celtinha, 10);
         carroService.acelerar(celtinha, 10);
