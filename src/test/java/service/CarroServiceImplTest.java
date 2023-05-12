@@ -70,4 +70,81 @@ public class CarroServiceImplTest {
         Assert.assertEquals(10, celtinha.getVelocidadeAtual());
     }
 
+    @Test
+    public void deveNaoAcelerarEstandoDesligado() {
+        // Dado:
+        CarroService carroService = new CarroServiceImpl();
+        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
+
+        // Quando:
+        carroService.acelerar(celtinha, 10);
+
+        // Então:
+        Assert.assertFalse(celtinha.isLigado());
+        Assert.assertEquals(0, celtinha.getVelocidadeAtual());
+    }
+
+
+    @Test
+    public void deveNaoFreiarEstandoDesligado() {
+        // Dado:
+        CarroService carroService = new CarroServiceImpl();
+        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
+
+        // Quando:
+        carroService.frear(celtinha, 10);
+
+        // Então:
+        Assert.assertFalse(celtinha.isLigado());
+        Assert.assertEquals(0, celtinha.getVelocidadeAtual());
+    }
+
+    @Test
+    public void deveNaoDesligarEstandoEmMovimento() {
+        // Dado:
+        CarroService carroService = new CarroServiceImpl();
+        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
+
+        // Quando:
+        carroService.ligar(celtinha);
+        carroService.acelerar(celtinha, 10);
+        carroService.desligar(celtinha);
+
+        // Então:
+        Assert.assertTrue(celtinha.isLigado());
+        Assert.assertEquals(10, celtinha.getVelocidadeAtual());
+    }
+
+    @Test
+    public void deveNaoFreiarMaisDoQueAVelocidadeAtual() {
+        // Dado:
+        CarroService carroService = new CarroServiceImpl();
+        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
+
+        // Quando:
+        carroService.ligar(celtinha);
+        carroService.acelerar(celtinha, 10);
+        carroService.frear(celtinha, 20);
+        // Então:
+        Assert.assertTrue(celtinha.isLigado());
+        Assert.assertEquals(10, celtinha.getVelocidadeAtual());
+    }
+
+    @Test
+    public void deveNaoPassarDaVelocidadeMaxima() {
+        // Dado:
+        CarroService carroService = new CarroServiceImpl();
+        Carro celtinha = new Carro("Prata", "Chevrolet", "Celta", 2001, 50);
+
+        // Quando:
+        carroService.ligar(celtinha);
+        carroService.acelerar(celtinha, 10);
+        carroService.acelerar(celtinha, 10);
+        carroService.acelerar(celtinha, 25);
+        carroService.acelerar(celtinha, 10);
+
+        // Então:
+        Assert.assertTrue(celtinha.isLigado());
+        Assert.assertEquals(45, celtinha.getVelocidadeAtual());
+    }
 }
